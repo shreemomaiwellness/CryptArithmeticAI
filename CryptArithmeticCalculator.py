@@ -31,13 +31,30 @@ def solve_cryptarithm(addends, result):
                 if '0' in decipher(initial_letters):
                         continue  # leading zeros not allowed
                 deciphered_sum = sum(int(decipher(addend)) for addend in addends)
-                
-     
+                if deciphered_sum == int(decipher(result)):
+                        def fmt(s):
+                                return f"{s}({decipher(s)})"
+                        
+                        text.insert(INSERT, ' + '.join(map(fmt, addends)))
+                        text.insert(INSERT, ' = ')
+                        text.insert(INSERT, fmt(result))
+                        text.insert(END, "\n\n\nThank you\n\n")
+                    
+                        #print(" + ".join(map(fmt, addends)), "=", fmt(result))
+                        break
+
+        else:
+                text.insert(INSERT, "No Solution Found")
+                text.insert(END, "\n\n\nThank You\n\n")
+                #print(" + ".join(addends), "=", result, " : no solution")
+
 def lab():
         a = entry1.get()
         b = entry2.get()
         c = entry3.get()
         solve_cryptarithm([a, b],  c)
+
+
 
 
 free = Label(root, text='      ')
@@ -50,11 +67,14 @@ entry1 = Entry(lframe)
 entry1.grid(row=3, column=2)
 
 
+
+
 label2 = Label(lframe, text='+ Word 2 : ')
 label2.grid(row=7, column=1, pady=7)
 
 entry2 = Entry(lframe)
 entry2.grid(row=7, column=2)
+
 
 
 label3 = Label(lframe, text='= Word 3 : ')
@@ -66,6 +86,10 @@ entry3.grid(row=11, column=2)
 
 button = Button(lframe, text='calculate', command=lab)
 button.grid(row=15, column=2)
+
+
+
+
 
 text.grid()
 root.mainloop()
